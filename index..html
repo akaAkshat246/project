@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Gallery Page</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin:0; padding:0; background:#f4f4f9; color:#333; }
+    
+    /* Intro section */
+    .intro { text-align: center; padding: 50px 20px; background: linear-gradient(120deg, #6a11cb, #2575fc); color: white; }
+    .intro h1 { font-size: 3rem; margin-bottom: 10px; }
+    .intro p { font-size: 1.2rem; max-width: 700px; margin: auto; }
+
+    /* Folder button */
+    .folder { text-align: center; margin: 40px auto; }
+    .folder button { font-size: 50px; padding: 30px; border-radius: 12px; border: none; background: #fff; cursor: pointer; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+    .folder button:hover { transform: scale(1.1); }
+
+    /* Gallery */
+    .gallery { display: none; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 30px auto; max-width: 1200px; }
+    .gallery img { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; cursor: pointer; transition: transform 0.3s; }
+    .gallery img:hover { transform: scale(1.05); }
+
+    /* Popup for large image */
+    .popup { display: none; position: fixed; z-index: 1000; left:0; top:0; width:100%; height:100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; flex-direction: column; }
+    .popup img { max-width: 80%; max-height: 80%; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+    .popup span.close { position: absolute; top: 20px; right: 40px; font-size: 40px; font-weight: bold; color: white; cursor: pointer; }
+    .popup span.nav-btn { position: absolute; top: 50%; font-size: 50px; font-weight: bold; color: white; cursor: pointer; user-select: none; padding: 10px; border-radius: 5px; }
+    .popup span.nav-btn:hover { background: rgba(255,255,255,0.2); }
+    #prev { left: 40px; } #next { right: 40px; }
+
+    /* Footer */
+    .footer { background:#333; color:#fff; text-align:center; padding:30px 20px; margin-top:40px; }
+    .footer a { color:#1da1f2; text-decoration:none; font-weight:bold; }
+    .footer a:hover { text-decoration:underline; }
+    .footer form { margin-top:15px; }
+    .footer input, .footer textarea { width: 80%; max-width:400px; padding:10px; margin:10px 0; border-radius:6px; border:1px solid #aaa; }
+    .footer button { padding: 10px 20px; border:none; border-radius:6px; background:#1da1f2; color:white; cursor:pointer; transition:0.3s; }
+    .footer button:hover { background:#0d8ddb; }
+  </style>
+</head>
+<body>
+
+  <!-- Intro Section -->
+  <div class="intro">
+    <h1>Welcome to My Gallery</h1>
+    <p>This is my personal picture gallery. Click the folder icon below to explore all images.</p>
+  </div>
+
+  <!-- Folder Icon -->
+  <div class="folder">
+    <button onclick="openGallery()">📁 Open Image Folder</button>
+  </div>
+
+  <!-- Gallery Section -->
+  <div class="gallery" id="gallery">
+   
+  </div>
+
+  <!-- Popup for Large Image -->
+  <div class="popup" id="popup">
+    <span class="close" id="close">&times;</span>
+    <span class="nav-btn" id="prev">&#10094;</span>
+    <img id="popupImg" src="" alt="Large View">
+    <span class="nav-btn" id="next">&#10095;</span>
+  </div>
+
+  <!-- Footer Section -->
+  <div class="footer">
+    <p>Follow me on Instagram: <a href="https://www.instagram.com/akshat.official2628?igsh=MWN1N3p3c3FiMmlpMA==" target="_blank">@akshat.official2628</a></p>
+    <p>Email: <a href="akshatavs1122@gmail.com">akshatavs1122@gmail.com</a></p>
+    <h3>Feedback</h3>
+    <form onsubmit="return submitFeedback()">
+      <input type="text" id="name" placeholder="Your Name" required><br>
+      <textarea id="feedback" rows="4" placeholder="Your Feedback" required></textarea><br>
+      <button type="submit">Send Feedback</button>
+    </form>
+  </div>
+
+  <!-- JS Scripts -->
+  <script>
+    // Open gallery
+    function openGallery() {
+      document.getElementById("gallery").style.display = "grid";
+    }
+
+    // Popup for large image
+    const popup = document.getElementById("popup");
+    const popupImg = document.getElementById("popupImg");
+    const closeBtn = document.getElementById("close");
+    const prevBtn = document.getElementById("prev");
+    const nextBtn = document.getElementById("next");
+    const images = document.querySelectorAll(".gallery img");
+    let currentIndex = 0;
+
+    function showImage(index) {
+      popupImg.src = images[index].src;
+      currentIndex = index;
+    }
+
+    images.forEach((img, index) => {
+      img.addEventListener("click", () => {
+        popup.style.display = "flex";
+        showImage(index);
+      });
+    });
+
+    closeBtn.addEventListener("click", () => popup.style.display = "none");
+    prevBtn.addEventListener("click", () => { currentIndex=(currentIndex-1+images.length)%images.length; showImage(currentIndex); });
+    nextBtn.addEventListener("click", () => { currentIndex=(currentIndex+1)%images.length; showImage(currentIndex); });
+    popup.addEventListener("click", e => { if(e.target===popup) popup.style.display="none"; });
+
+    document.addEventListener("keydown", (e) => {
+      if(popup.style.display==="flex"){
+        if(e.key==="ArrowLeft"){currentIndex=(currentIndex-1+images.length)%images.length;showImage(currentIndex);}
+        else if(e.key==="ArrowRight"){currentIndex=(currentIndex+1)%images.length;showImage(currentIndex);}
+        else if(e.key==="Escape"){popup.style.display="none";}
+      }
+    });
+
+    // Feedback submission (dummy)
+    function submitFeedback() {
+      const name = document.getElementById("name").value;
+      const feedback = document.getElementById("feedback").value;
+      if(name && feedback){
+        alert("Thank you for your feedback, " + name + "!");
+        document.getElementById("name").value = "";
+        document.getElementById("feedback").value = "";
+      }
+      return false; // prevent actual form submission
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: flex-end;  /* Box ko right side shift */
+      align-items: center;        /* Vertically center */
+      background-image: url('background.jpg'); /* Background image */
+      background-size: cover;
+      background-position: center;
+      font-family: Arial, sans-serif;
+    }
+
+    .login-container {
+      background: rgba(255, 255, 255, 0.5); /* Medium transparency */
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+      width: 350px;
+      text-align: center;
+      margin-right: 50px; /* Right edge se gap */
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #000;
+    }
+
+    .input-box {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #aaa;
+      border-radius: 6px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #007bff;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Login</h2>
+    <form onsubmit="return goToGallery(event)">
+      <input type="text" class="input-box" placeholder="Username" required>
+      <input type="email" class="input-box" placeholder="Email" required>
+      <input type="password" class="input-box" placeholder="Password" required>
+      <input type="tel" class="input-box" placeholder="Mobile Number" required>
+
+      <!-- Class dropdown -->
+      <select class="input-box" required>
+        <option value="">Select Class</option>
+        <option>9th</option>
+        <option>10th</option>
+        <option>11th</option>
+        <option>12th</option>
+        <option>13th</option>
+        <option>NA</option>
+      </select>
+
+      <!-- Degree dropdown -->
+      <select class="input-box" required>
+        <option value="">Select Degree</option>
+        <option>B.Tech CSE</option>
+        <option>B..Tech Food Tech</option>
+        <option>B.Tech Ceramics</option>
+        <option>B.Tech mechanical</option>
+        <option>MBBS</option>
+        <option>M.Sc</option>
+        <option>M.A</option>
+        <option>NA</option>
+      </select>
+
+      <!-- Nationality dropdown -->
+      <select class="input-box" required>
+        <option value="">Select Nationality</option>
+        <option>Indian</option>
+        <option>American</option>
+        <option>British</option>
+        <option>Canadian</option>
+        <option>Australian</option>
+        <option>Russian</option>
+      </select>
+
+      <!-- City dropdown -->
+      <select class="input-box" required>
+        <option value="">Select City</option>
+        <option>NRI</option>
+        <option>Delhi</option>
+        <option>Pilkhuwa</option>
+        <option>Kundali</option>
+        <option>Varanasi</option>
+        <option>Mumbai</option>
+        <option>Bengaluru</option>
+        <option>Lucknow</option>
+        <option>Kanpur</option>
+        <option>Hapur</option>
+      </select>
+
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+  <script>
+    function goToGallery(event) {
+      event.preventDefault();
+      window.location.href = "gallery.html"; 
+    }
+  </script>
+</body>
+</html>
